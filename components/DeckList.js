@@ -43,33 +43,34 @@ class DeckList extends React.Component {
   render() {
     return ( // Try different View options FlatView or ListView
       <ScrollView contentContainerStyle={{ justifyContent: 'space-between' }} >
-        <Deck>
-          <Title>Card title</Title>
+        <Deck
+          onPress={() => this.props.navigation.navigate('DeckView')}>
+          <Title>Deck title</Title>
           <Content>3 cards</Content>
           <Hint>Tap to open</Hint>
         </Deck>
         <Deck>
-          <Title>Card title</Title>
+          <Title>Deck title</Title>
           <Content>3 cards</Content>
           <Hint>Tap to open</Hint>
         </Deck>
         <Deck>
-          <Title>Card title</Title>
+          <Title>Deck title</Title>
           <Content>3 cards</Content>
           <Hint>Tap to open</Hint>
         </Deck>
         <Deck>
-          <Title>Card title</Title>
+          <Title>Deck title</Title>
           <Content>3 cards</Content>
           <Hint>Tap to open</Hint>
         </Deck>
         <Deck>
-          <Title>Card title</Title>
+          <Title>Deck title</Title>
           <Content>3 cards</Content>
           <Hint>Tap to open</Hint>
         </Deck>
         <Deck>
-          <Title>Card title</Title>
+          <Title>Deck title</Title>
           <Content>3 cards</Content>
           <Hint>Tap to open</Hint>
         </Deck>

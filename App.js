@@ -14,6 +14,7 @@ import { white, accentRed, lightGray, gray } from './utils/colors'
 import { Constants } from 'expo'
 import DeckList from './components/DeckList'
 import CreateNewDeck from './components/CreateNewDeck'
+import DeckView from './components/DeckView'
 
 
 function CustomStatusBar ({backgroundColor, ...props}) {
@@ -75,12 +76,33 @@ const tabNavigatorConfig = {
 
 const Tabs = createMaterialTopTabNavigator(tabRouteConfig,tabNavigatorConfig)
 
+const stackRouteConfig = {
+  Home: {
+    screen: Tabs,
+    navigationOptions: {
+      header: null,
+    },
+  },
+  DeckView: {
+    screen: DeckView,
+    navigationOptions: {
+      title: 'Deck Title',
+      headerTintColor: accentRed,
+      headerStyle: {
+        backgroundColor: white,
+      },
+    },
+  },
+}
+
+const MainNavigator = createStackNavigator(stackRouteConfig)
+
 export default class App extends React.Component {
   render() {
     return (
       <View style = {{ flex:1,backgroundColor: lightGray }}>
         <CustomStatusBar backgroundColor = { accentRed } barStyle="light-content" />
-        <Tabs />
+        <MainNavigator />
       </View>
     );
   }

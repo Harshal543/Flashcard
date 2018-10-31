@@ -70,17 +70,17 @@ class CreateNewDeck extends React.Component {
 
   render() {
     return (
-      <KeyboardAvoidingView behavior = 'padding' style = {{flex:1}}>
+      <KeyboardAvoidingView behavior = 'padding' style = {{flex:1}} >
         <Form>
           <Title>Enter Title of Deck</Title>
-          <Input value = {this.state.title}
-            onChangeText = {(text) => this.handleChange(text)}/>
+          <Input value = { this.state.title }
+            onChangeText = {(text) => this.handleChange(text)} />
           <Action>
             <CustomButton
               style = { styles.clrBtn }
               textStyle = {{ color: red }}
               onPress = { () => this.clearInput() } >Clear</CustomButton>
-            <CustomButton style={styles.submitBtn}>Submit</CustomButton>
+            <CustomButton style={ styles.submitBtn } >Submit</CustomButton>
           </Action>
         </Form>
       </KeyboardAvoidingView>

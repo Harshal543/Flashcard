@@ -9,6 +9,9 @@ const CustomTextInput = glamorous.textInput({
   borderRadius: Platform.OS === 'ios'
     ? 9
     : 2 ,
+  borderWidth: Platform.OS === 'ios'
+    ? 1
+    : 0,
   paddingLeft: 10,
   paddingRight: 10,
   fontSize: 16,
