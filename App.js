@@ -1,17 +1,16 @@
 import React from 'react';
 import {
-  StyleSheet,
   Text,
   View,
   Platform,
   StatusBar,
 } from 'react-native';
 import {
-  createBottomTabNavigator,
   createMaterialTopTabNavigator,
-  // createStackNavigator
+  createStackNavigator,
 } from 'react-navigation'
-import { white, orange } from './utils/colors'
+import { MaterialIcons, Entypo } from '@expo/vector-icons'
+import { white, accentRed, lightGray, gray } from './utils/colors'
 import { Constants } from 'expo'
 import DeckList from './components/DeckList'
 import CreateNewDeck from './components/CreateNewDeck'
@@ -19,7 +18,7 @@ import CreateNewDeck from './components/CreateNewDeck'
 
 function CustomStatusBar ({backgroundColor, ...props}) {
   return (
-    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+    <View style={{ backgroundColor, height: Constants.statusBarHeight, marginBottom: 4 }}>
       <StatusBar translucent backgroundColor={backgroundColor} {...props} />
     </View>
   )
@@ -31,13 +30,14 @@ const tabRouteConfig = {
     screen: DeckList,
     navigationOptions: {
       tabBarLabel: 'Deck List',
-      // tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <MaterialIcons name='dashboard' size={28} color={tintColor} />
     },
   },
   CreateNewDeck: {
     screen: CreateNewDeck,
     navigationOptions: {
-      tabBarLabel: 'Create New Deck'
+      tabBarLabel: 'Add Deck',
+      tabBarIcon: ({ tintColor }) => <Entypo name='add-to-list' size={28} color={tintColor} />
     }
   }
 }
@@ -46,32 +46,40 @@ const tabNavigatorConfig = {
   navigationOptions : {
     header: null,
   },
+  tabBarPosition: 'bottom',
   tabBarOptions: {
-    activeTintColor: Platform.OS === 'ios' ? orange : white,
+    showIcon: true,
+    labelStyle: {
+      fontSize: 10,
+    },
+    indicatorStyle:{
+      height: 1,
+      backgroundColor: accentRed,
+    },
+    activeTintColor: accentRed,
+    inactiveTintColor: gray,
     style: {
-      height: 50,
-      backgroundColor: Platform.OS === 'ios' ? white : orange,
+      height: 55,
+      backgroundColor:  white,
+      elevation: 5,
       shadowColor: 'rgba(0, 0, 0, 0.24)',
       shadowOffset: {
         width: 0,
         height: 3
       },
       shadowRadius: 6,
-      shadowOpacity: 1
+      shadowOpacity: 1,
     }
   }
 }
 
-const Tabs = Platform.OS === 'ios' ?
-  createBottomTabNavigator(tabRouteConfig,tabNavigatorConfig)
-  : createMaterialTopTabNavigator(tabRouteConfig,tabNavigatorConfig)
-
+const Tabs = createMaterialTopTabNavigator(tabRouteConfig,tabNavigatorConfig)
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={{flex:1,backgroundColor: '#ddd'}}>
-        <CustomStatusBar backgroundColor={orange} barStyle="light-content" />
+      <View style = {{ flex:1,backgroundColor: lightGray }}>
+        <CustomStatusBar backgroundColor = { accentRed } barStyle="light-content" />
         <Tabs />
       </View>
     );

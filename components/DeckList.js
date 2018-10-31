@@ -1,73 +1,81 @@
 import React from 'react'
-import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import { Text, View, ScrollView, Platform } from 'react-native'
+import { gray, teal, white } from '../utils/colors'
+import glamorous from 'glamorous-native'
+
+const Deck = glamorous.touchableOpacity({
+  flex: 1,
+  height: 150,
+  elevation: 2,
+  borderRadius: Platform.OS === 'ios' ? 16 : 7,
+  shadowRadius: 3,
+  shadowOpacity: 1,
+  shadowColor: 'rgba(0, 0, 0, 0.24)',
+  shadowOffset: {
+    width: 0,
+    height: 3
+  },
+  backgroundColor: white,
+  marginTop: 2,
+  marginBottom: 2,
+  marginLeft: 10,
+  marginRight: 10,
+  alignItems: 'center',
+  justifyContent: 'center',
+})
+
+const Title = glamorous.text({
+  fontSize: 28,
+  color: teal,
+})
+
+const Content = glamorous.text({
+  fontSize: 16,
+})
+
+const Hint = glamorous.text({
+  fontSize:10,
+  color: gray,
+  marginTop: 15,
+})
 
 class DeckList extends React.Component {
   render() {
     return ( // Try different View options FlatView or ListView
-      <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.box}>
-          <Text style={styles.title}>Card title1</Text>
-          <Text>No.of cards</Text>
-        </View>
-        <View style={styles.box}>
-          <Text style={styles.title}>Card title2</Text>
-          <Text>No.of cards</Text>
-        </View>
-        <View style={styles.box}>
-          <Text style={styles.title}>Card title3</Text>
-          <Text>No.of cards</Text>
-        </View>
-        <View style={styles.box}>
-          <Text style={styles.title}>Card title4</Text>
-          <Text>No.of cards</Text>
-        </View>
-         <View style={styles.box}>
-          <Text style={styles.title}>Card title5</Text>
-          <Text>No.of cards</Text>
-        </View>
-         <View style={styles.box}>
-          <Text style={styles.title}>Card title6</Text>
-          <Text>No.of cards</Text>
-        </View>
-         <View style={styles.box}>
-          <Text style={styles.title}>Card title7</Text>
-          <Text>No.of cards</Text>
-        </View>
-         <View style={styles.box}>
-          <Text style={styles.title}>Card title8</Text>
-          <Text>No.of cards</Text>
-        </View>
-        <View style={styles.box}>
-          <Text style={styles.title}>Card title9</Text>
-          <Text>No.of cards</Text>
-        </View>
+      <ScrollView contentContainerStyle={{ justifyContent: 'space-between' }} >
+        <Deck>
+          <Title>Card title</Title>
+          <Content>3 cards</Content>
+          <Hint>Tap to open</Hint>
+        </Deck>
+        <Deck>
+          <Title>Card title</Title>
+          <Content>3 cards</Content>
+          <Hint>Tap to open</Hint>
+        </Deck>
+        <Deck>
+          <Title>Card title</Title>
+          <Content>3 cards</Content>
+          <Hint>Tap to open</Hint>
+        </Deck>
+        <Deck>
+          <Title>Card title</Title>
+          <Content>3 cards</Content>
+          <Hint>Tap to open</Hint>
+        </Deck>
+        <Deck>
+          <Title>Card title</Title>
+          <Content>3 cards</Content>
+          <Hint>Tap to open</Hint>
+        </Deck>
+        <Deck>
+          <Title>Card title</Title>
+          <Content>3 cards</Content>
+          <Hint>Tap to open</Hint>
+        </Deck>
       </ScrollView>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container:{
-    justifyContent: 'space-between',
-  },
-  title: {
-    fontSize:25,
-  },
-  box: {
-    height: 150,
-    borderRadius: 7,
-    borderStyle: 'solid',
-    borderColor: '#000',
-    backgroundColor: 'white',
-    marginTop: 2,
-    marginBottom: 2,
-    marginLeft: 10,
-    marginRight: 10,
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    paddingTop: 15,
-    paddingBottom: 5,
-  },
-})
 
 export default DeckList
