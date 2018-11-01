@@ -26,14 +26,6 @@ const Btn = glamorous.touchableOpacity({
   })
 )
 
-const styles = StyleSheet.create({
-  btnText: {
-    color: teal,
-    textAlign: 'center',
-    fontWeight: 'bold',
-  }
-})
-
 const ButtonLabel = glamorous.text({
   color: teal,
   textAlign: 'center',
@@ -46,7 +38,7 @@ const ButtonLabel = glamorous.text({
   })
 )
 
-function CustomButton({ children, onPress, style={}, textStyle={}, ...rest }) {
+function CustomButton({ children, onPress, style={}, ...rest }) {
   return(
     <Btn style = { style } onPress = { onPress } { ...rest } >
       <ButtonLabel { ...rest } >{ children }</ButtonLabel>

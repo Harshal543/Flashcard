@@ -81,6 +81,7 @@ class CreateNewDeck extends Component {
           </InteractContainer>
           <Action>
             <CustomButton
+              style = { styles.clrBtn }
               color = { red }
               onPress = { () => this.clearInput() } >Clear</CustomButton>
             <CustomButton style={ styles.submitBtn } >Submit</CustomButton>
