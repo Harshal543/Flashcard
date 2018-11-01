@@ -1,6 +1,6 @@
 import React from 'react'
 import glamorous from 'glamorous-native'
-import { teal } from '../utils/colors'
+import { teal, white } from '../utils/colors'
 import { Platform, Text, StyleSheet } from 'react-native'
 
 const Btn = glamorous.touchableOpacity({
@@ -9,8 +9,6 @@ const Btn = glamorous.touchableOpacity({
   paddingLeft: 30,
   paddingRight: 30,
   height: 45,
-  borderWidth: 1,
-  borderColor: teal,
   borderRadius: Platform.OS === 'ios' ? 7 : 2,
   shadowRadius: 3,
   shadowOpacity: 1,
@@ -20,7 +18,13 @@ const Btn = glamorous.touchableOpacity({
     height: 3
   },
   justifyContent: 'center',
-})
+},
+  (props) => ({
+    backgroundColor: props.fill && props.color,
+    borderColor: props.color ? props.color : teal,
+    borderWidth: props.noborder ? 0 : 1,
+  })
+)
 
 const styles = StyleSheet.create({
   btnText: {
@@ -30,10 +34,22 @@ const styles = StyleSheet.create({
   }
 })
 
-function CustomButton({ children, onPress, style={}, textStyle={} }) {
+const ButtonLabel = glamorous.text({
+  color: teal,
+  textAlign: 'center',
+  fontWeight: 'bold',
+},
+  (props) => ({
+    color: props.color ?
+    (props.fill ? white : props.color)
+    : teal,
+  })
+)
+
+function CustomButton({ children, onPress, style={}, textStyle={}, ...rest }) {
   return(
-    <Btn style = { style } onPress = { onPress } >
-      <Text style = {[styles.btnText,textStyle]} >{ children }</Text>
+    <Btn style = { style } onPress = { onPress } { ...rest } >
+      <ButtonLabel { ...rest } >{ children }</ButtonLabel>
     </Btn>
   )
 }

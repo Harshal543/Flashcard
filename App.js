@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -31,14 +31,14 @@ const tabRouteConfig = {
     screen: DeckList,
     navigationOptions: {
       tabBarLabel: 'Deck List',
-      tabBarIcon: ({ tintColor }) => <MaterialIcons name='dashboard' size={28} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <MaterialIcons name='dashboard' size={24} color={tintColor} />
     },
   },
   CreateNewDeck: {
     screen: CreateNewDeck,
     navigationOptions: {
       tabBarLabel: 'Add Deck',
-      tabBarIcon: ({ tintColor }) => <Entypo name='add-to-list' size={28} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <Entypo name='add-to-list' size={24} color={tintColor} />
     }
   }
 }
@@ -83,6 +83,7 @@ const stackRouteConfig = {
       header: null,
     },
   },
+
   DeckView: {
     screen: DeckView,
     navigationOptions: {
@@ -97,7 +98,7 @@ const stackRouteConfig = {
 
 const MainNavigator = createStackNavigator(stackRouteConfig)
 
-export default class App extends React.Component {
+export default class App extends Component {
   render() {
     return (
       <View style = {{ flex:1,backgroundColor: lightGray }}>

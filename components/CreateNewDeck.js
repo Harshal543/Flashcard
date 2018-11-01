@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {
   StyleSheet,
   Text,
@@ -14,7 +14,6 @@ import CustomButton from './CustomButton'
 const Form = glamorous.view({
   flex: 1,
   paddingTop: 80,
-  paddingBottom: 80,
   elevation: 3,
   alignSelf: 'stretch',
   backgroundColor: 'white',
@@ -24,13 +23,17 @@ const Form = glamorous.view({
   marginRight: 10,
 })
 
+const InteractContainer =  glamorous.view({
+  flex: 7,
+  justifyContent: 'center',
+  alignItems: 'center'
+})
+
 const Action = glamorous.view({
-  flexDirection: Platform.OS === 'ios'
-    ? 'row-reverse'
-    : 'row',
-  marginTop: 70,
-  paddingLeft: 5,
-  paddingRight: 5,
+  flex: 3,
+  flexDirection: 'row',
+  alignItems: 'flex-end',
+  padding: 5,
 })
 
 const Title = glamorous.text({
@@ -41,7 +44,6 @@ const Title = glamorous.text({
 const styles = StyleSheet.create({
   clrBtn: {
     flex: 1,
-    borderColor: red,
   },
   submitBtn: {
     flex: 2,
@@ -49,7 +51,7 @@ const styles = StyleSheet.create({
 })
 
 
-class CreateNewDeck extends React.Component {
+class CreateNewDeck extends Component {
   state={
     title: '',
   }
@@ -72,13 +74,14 @@ class CreateNewDeck extends React.Component {
     return (
       <KeyboardAvoidingView behavior = 'padding' style = {{flex:1}} >
         <Form>
-          <Title>Enter Title of Deck</Title>
-          <Input value = { this.state.title }
-            onChangeText = {(text) => this.handleChange(text)} />
+          <InteractContainer>
+            <Title>Enter Title of Deck</Title>
+            <Input value = { this.state.title }
+              onChangeText = {(text) => this.handleChange(text)} />
+          </InteractContainer>
           <Action>
             <CustomButton
-              style = { styles.clrBtn }
-              textStyle = {{ color: red }}
+              color = { red }
               onPress = { () => this.clearInput() } >Clear</CustomButton>
             <CustomButton style={ styles.submitBtn } >Submit</CustomButton>
           </Action>
@@ -90,3 +93,17 @@ class CreateNewDeck extends React.Component {
 
 
 export default CreateNewDeck
+
+
+/*
+//try later
+onContentSizeChange={(event) => this._handleSizeChange(event)}
+_handleSizeChange = event => {
+  console.log('_handleSizeChange ---->', event.nativeEvent.contentSize.height);
+
+  this.setState({
+    inputHeight: event.nativeEvent.contentSize.height
+  });
+};
+
+*/

@@ -29,7 +29,7 @@ const Title = glamorous.text({
   color: teal,
 })
 
-const Content = glamorous.text({
+const CardCount = glamorous.text({
   fontSize: 16,
 })
 
@@ -42,36 +42,11 @@ const Hint = glamorous.text({
 class DeckList extends React.Component {
   render() {
     return ( // Try different View options FlatView or ListView
-      <ScrollView contentContainerStyle={{ justifyContent: 'space-between' }} >
+      <ScrollView>
         <Deck
           onPress={() => this.props.navigation.navigate('DeckView')}>
           <Title>Deck title</Title>
-          <Content>3 cards</Content>
-          <Hint>Tap to open</Hint>
-        </Deck>
-        <Deck>
-          <Title>Deck title</Title>
-          <Content>3 cards</Content>
-          <Hint>Tap to open</Hint>
-        </Deck>
-        <Deck>
-          <Title>Deck title</Title>
-          <Content>3 cards</Content>
-          <Hint>Tap to open</Hint>
-        </Deck>
-        <Deck>
-          <Title>Deck title</Title>
-          <Content>3 cards</Content>
-          <Hint>Tap to open</Hint>
-        </Deck>
-        <Deck>
-          <Title>Deck title</Title>
-          <Content>3 cards</Content>
-          <Hint>Tap to open</Hint>
-        </Deck>
-        <Deck>
-          <Title>Deck title</Title>
-          <Content>3 cards</Content>
+          <CardCount>3 cards</CardCount>
           <Hint>Tap to open</Hint>
         </Deck>
       </ScrollView>
