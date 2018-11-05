@@ -1,7 +1,7 @@
 import React from 'react'
 import glamorous from 'glamorous-native'
 import { teal, white } from '../utils/colors'
-import { Platform, Text, StyleSheet } from 'react-native'
+import { Platform, Text } from 'react-native'
 
 const Btn = glamorous.touchableOpacity({
   margin: 2,
@@ -10,13 +10,6 @@ const Btn = glamorous.touchableOpacity({
   paddingRight: 30,
   height: 45,
   borderRadius: Platform.OS === 'ios' ? 7 : 2,
-  shadowRadius: 3,
-  shadowOpacity: 1,
-  shadowColor: 'rgba(0, 0, 0, 0.24)',
-  shadowOffset: {
-    width: 0,
-    height: 3
-  },
   justifyContent: 'center',
 },
   (props) => ({
@@ -28,6 +21,7 @@ const Btn = glamorous.touchableOpacity({
 
 const ButtonLabel = glamorous.text({
   color: teal,
+  fontSize: 16,
   textAlign: 'center',
   fontWeight: 'bold',
 },

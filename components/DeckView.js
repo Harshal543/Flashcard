@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { Component } from 'react'
 import glamorous  from 'glamorous-native'
 import { Text, View } from 'react-native'
 import { teal, gray, accentRed } from '../utils/colors'
 import CustomButton from './CustomButton'
+import { Entypo } from '@expo/vector-icons'
 
 const Container = glamorous.view({
   flex: 1,
@@ -37,7 +38,7 @@ const CardCount = glamorous.text({
   color: teal,
 })
 
-export default function DeckView(props) {
+function DeckView (props){
   return(
     <Container>
       <ContentContainer>
@@ -45,10 +46,15 @@ export default function DeckView(props) {
         <CardCount># cards</CardCount>
       </ContentContainer>
       <Action>
-        <CustomButton style={{margin: 10}} color = { accentRed } fill >Start Quiz</CustomButton>
-        <CustomButton style={{margin: 10}}>Add Question</CustomButton>
-        <CustomButton style={{margin: 20}} noborder color = { gray } >Delete Deck</CustomButton>
+        <CustomButton style = {{ margin: 10 }} color = { accentRed } fill >Start Quiz</CustomButton>
+        <CustomButton onPress={() => props.navigation.navigate('NewQuestion')}
+          style={{ margin: 10 }} >
+            <Entypo name = 'plus' size = { 18 } /> Question
+          </CustomButton>
+        <CustomButton style={{ margin: 20 }} noborder color = { gray } >Delete Deck</CustomButton>
       </Action>
     </Container>
   )
 }
+
+export default DeckView

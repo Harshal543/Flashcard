@@ -1,6 +1,5 @@
 import React from 'react'
 import { Platform } from 'react-native'
-import { accentRed } from '../utils/colors'
 import glamorous from 'glamorous-native'
 
 const CustomTextInput = glamorous.textInput({

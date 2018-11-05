@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {
-  StyleSheet,
   Text,
   View,
   KeyboardAvoidingView,
@@ -41,15 +40,6 @@ const Title = glamorous.text({
   marginBottom: 30,
 })
 
-const styles = StyleSheet.create({
-  clrBtn: {
-    flex: 1,
-  },
-  submitBtn: {
-    flex: 2,
-  }
-})
-
 
 class CreateNewDeck extends Component {
   state={
@@ -77,14 +67,15 @@ class CreateNewDeck extends Component {
           <InteractContainer>
             <Title>Enter Title of Deck</Title>
             <Input value = { this.state.title }
+              placeholder = 'Title'
               onChangeText = {(text) => this.handleChange(text)} />
           </InteractContainer>
           <Action>
             <CustomButton
-              style = { styles.clrBtn }
+              style = {{ flex: 1 }}
               color = { red }
               onPress = { () => this.clearInput() } >Clear</CustomButton>
-            <CustomButton style={ styles.submitBtn } >Submit</CustomButton>
+            <CustomButton style={{ flex: 2 }} >Submit</CustomButton>
           </Action>
         </Form>
       </KeyboardAvoidingView>
@@ -94,17 +85,3 @@ class CreateNewDeck extends Component {
 
 
 export default CreateNewDeck
-
-
-/*
-//try later
-onContentSizeChange={(event) => this._handleSizeChange(event)}
-_handleSizeChange = event => {
-  console.log('_handleSizeChange ---->', event.nativeEvent.contentSize.height);
-
-  this.setState({
-    inputHeight: event.nativeEvent.contentSize.height
-  });
-};
-
-*/

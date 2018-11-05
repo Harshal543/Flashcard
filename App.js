@@ -15,6 +15,7 @@ import { Constants } from 'expo'
 import DeckList from './components/DeckList'
 import CreateNewDeck from './components/CreateNewDeck'
 import DeckView from './components/DeckView'
+import NewQuestion from './components/NewQuestion'
 
 
 function CustomStatusBar ({backgroundColor, ...props}) {
@@ -83,11 +84,20 @@ const stackRouteConfig = {
       header: null,
     },
   },
-
   DeckView: {
     screen: DeckView,
     navigationOptions: {
       title: 'Deck Title',
+      headerTintColor: accentRed,
+      headerStyle: {
+        backgroundColor: white,
+      },
+    },
+  },
+  NewQuestion: {
+    screen: NewQuestion,
+    navigationOptions: {
+      title: 'New Question',
       headerTintColor: accentRed,
       headerStyle: {
         backgroundColor: white,
