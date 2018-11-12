@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import glamorous from 'glamorous-native'
-import { View, Text, KeyboardAvoidingView } from 'react-native'
+import { View, Text, KeyboardAvoidingView, ScrollView } from 'react-native'
 import { gray, teal, white, accentRed } from '../utils/colors'
 import Input from './CustomTextInput'
 import CustomButton from './CustomButton'
@@ -22,7 +22,7 @@ const Title = glamorous.text({
 })
 
 const InteractContainer =  glamorous.view({
-  flex: 4,
+  flex: 7,
   justifyContent: 'center',
   alignItems: 'center',
 })
@@ -44,9 +44,7 @@ const Label = glamorous.text({
 class NewQuestion extends Component {
   state = {
     question: '',
-    questionInputHeight: 0,
     answer: '',
-    answerInputHeight: 0,
   }
 
   handleQuestionInput = (ques) => {
@@ -57,53 +55,40 @@ class NewQuestion extends Component {
   : this.setState(() => ({
       question: '',
     }))
-}
+  }
 
-handleAnswerInput = (ans) => {
-  ans.trim() !== '' ?
-    this.setState(() => ({
-      answer: ans,
-    }))
-  : this.setState(() => ({
-      answer: '',
-    }))
-}
-
-handleQuestionSizeChange = (event) => {
-  this.setState({
-    questionInputHeight: event.nativeEvent.contentSize.height,
-  })
-}
-
-handleAnswerSizeChange = (event) => {
-  this.setState({
-    answerInputHeight: event.nativeEvent.contentSize.height,
-  })
-}
+  handleAnswerInput = (ans) => {
+    ans.trim() !== '' ?
+      this.setState(() => ({
+        answer: ans,
+      }))
+    : this.setState(() => ({
+        answer: '',
+      }))
+  }
 
   render(){
+    const { question, answer } = this.state
     return(
       <KeyboardAvoidingView behavior = 'padding' style = {{ flex:1 }} >
         <Form>
           <InteractContainer>
             <Title>Add New Question</Title>
-            <Label>Question</Label>
-            <Input value = { this.state.question }
+            <Label>Question:</Label>
+            <Input value = { question }
               placeholder = 'Question'
-              style={{ margin:10 }}
+              style = {{ margin:10 }}
               multiline = { true }
-              onContentSizeChange = { (event) => this.handleQuestionSizeChange(event) }
               onChangeText = { (text) => this.handleQuestionInput(text) } />
-            <Label>Answer</Label>
-            <Input value = { this.state.answer }
-              placeholder = 'Answer'
-              style={{ margin:10 }}
+            <Label>Answer:</Label>
+            <Input value = { answer }
+              placeholder = 'Answer...'
+              style = {{ margin: 10, marginTop: 0, height: 80 }}
               multiline = { true }
-              onContentSizeChange = { (event) => this.handleAnswerSizeChange(event) }
               onChangeText = { (text) => this.handleAnswerInput(text) } />
           </InteractContainer>
           <Action>
-            <CustomButton>Add</CustomButton>
+            <CustomButton value = 'Add' />
           </Action>
         </Form>
       </KeyboardAvoidingView>

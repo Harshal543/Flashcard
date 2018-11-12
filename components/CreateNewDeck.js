@@ -31,7 +31,7 @@ const InteractContainer =  glamorous.view({
 const Action = glamorous.view({
   flex: 3,
   flexDirection: 'row',
-  alignItems: 'flex-end',
+  alignItems: 'center',
   padding: 5,
 })
 
@@ -74,8 +74,9 @@ class CreateNewDeck extends Component {
             <CustomButton
               style = {{ flex: 1 }}
               color = { red }
-              onPress = { () => this.clearInput() } >Clear</CustomButton>
-            <CustomButton style={{ flex: 2 }} >Submit</CustomButton>
+              value = 'Clear'
+              onPress = { () => this.clearInput() } />
+            <CustomButton style={{ flex: 2 }} value = 'Submit' />
           </Action>
         </Form>
       </KeyboardAvoidingView>

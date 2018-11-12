@@ -46,12 +46,17 @@ function DeckView (props){
         <CardCount># cards</CardCount>
       </ContentContainer>
       <Action>
-        <CustomButton style = {{ margin: 10 }} color = { accentRed } fill >Start Quiz</CustomButton>
+        <CustomButton style = {{ margin: 10 }}
+          color = { accentRed }
+          value = 'Start Quiz'
+          fill />
         <CustomButton onPress={() => props.navigation.navigate('NewQuestion')}
-          style={{ margin: 10 }} >
-            <Entypo name = 'plus' size = { 18 } /> Question
-          </CustomButton>
-        <CustomButton style={{ margin: 20 }} noborder color = { gray } >Delete Deck</CustomButton>
+          style={{ margin: 10 }} value = 'Question' >
+            <Entypo name = 'plus' size = { 18 } />
+        </CustomButton>
+        <CustomButton style={{ margin: 20 }}
+          value = 'Delete Deck'
+          noborder color = { gray } />
       </Action>
     </Container>
   )
