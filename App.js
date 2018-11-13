@@ -4,6 +4,7 @@ import {
   View,
   Platform,
   StatusBar,
+  AsyncStorage,
 } from 'react-native';
 import {
   createMaterialTopTabNavigator,

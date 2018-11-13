@@ -2,6 +2,7 @@ import React from 'react'
 import { Text, View, ScrollView, Platform } from 'react-native'
 import { gray, teal, white } from '../utils/colors'
 import glamorous from 'glamorous-native'
+import { fetchData } from '../utils/helpers'
 
 const Deck = glamorous.touchableOpacity({
   flex: 1,
@@ -40,6 +41,20 @@ const Hint = glamorous.text({
 })
 
 class DeckList extends React.Component {
+
+  state = {
+    deckList: {test: 'test'},
+  }
+
+  componentDidMount() {
+    fetchData()
+      .then((deck) => {
+        this.setState(() => ({
+          deckList: deck,
+        }))
+      })
+  }
+
   render() {
     return ( // Try different View options FlatView or ListView
       <ScrollView>
@@ -49,6 +64,7 @@ class DeckList extends React.Component {
           <CardCount>3 cards</CardCount>
           <Hint>Tap to open</Hint>
         </Deck>
+        <Text>{JSON.stringify(this.state.deckList)}</Text>
       </ScrollView>
     )
   }
