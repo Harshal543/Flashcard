@@ -1,8 +1,10 @@
 import React from 'react'
-import { Text, View, ScrollView, Platform } from 'react-native'
+import { Text, View, ScrollView, Platform, AsyncStorage } from 'react-native'
 import { gray, teal, white } from '../utils/colors'
 import glamorous from 'glamorous-native'
+import { receiveDeckEntries } from '../actions'
 import { fetchData } from '../utils/helpers'
+import { connect } from 'react-redux'
 
 const Deck = glamorous.touchableOpacity({
   flex: 1,
@@ -40,34 +42,66 @@ const Hint = glamorous.text({
   marginTop: 15,
 })
 
+const CenterView = glamorous.view({
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+})
+
 class DeckList extends React.Component {
 
-  state = {
-    deckList: {test: 'test'},
-  }
-
   componentDidMount() {
+    const { receiveData } = this.props
     fetchData()
-      .then((deck) => {
-        this.setState(() => ({
-          deckList: deck,
-        }))
-      })
+      .then((deckEntries) => receiveData(deckEntries))
   }
 
   render() {
+    const { decks, deckArray } = this.props
+
+    if (deckArray === null) {
+      return (
+        <CenterView>
+          <Text>No deck</Text>
+        </CenterView>
+      )
+    }
+
     return ( // Try different View options FlatView or ListView
       <ScrollView>
-        <Deck
-          onPress={() => this.props.navigation.navigate('DeckView')}>
-          <Title>Deck title</Title>
-          <CardCount>3 cards</CardCount>
-          <Hint>Tap to open</Hint>
-        </Deck>
-        <Text>{JSON.stringify(this.state.deckList)}</Text>
+        {
+          deckArray.map((deck) => (
+            <Deck key = { decks[deck].title }
+              onPress={() => this.props.navigation.navigate('DeckView')}>
+              <Title>{ decks[deck].title }</Title>
+              <CardCount>{ decks[deck].questions.length } cards</CardCount>
+              <Hint>Tap to open</Hint>
+            </Deck>
+          ))
+        }
       </ScrollView>
     )
   }
 }
 
-export default DeckList
+function mapStateToProps (decks) {
+  const deckArray = decks ? Object.keys(decks) : null
+  return {
+    decks,
+    deckArray,
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    receiveData : (deckEntries) => {
+      dispatch(receiveDeckEntries(deckEntries))
+    }
+  }
+}
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DeckList)

@@ -1,13 +1,9 @@
 import { AsyncStorage } from 'react-native'
-import { formatData } from './_dummyData'
-import { DECK_STORAGE_KEY } from './helpers'
+import { formatData, DECK_STORAGE_KEY } from './_dummyData'
 
-export function fetchData() {
+export function fetchData () {
   return AsyncStorage.getItem(DECK_STORAGE_KEY)
     .then((decks) => {
-      formatData(decks)
-    },
-    (error) => {
-      console.log('getItem error :', error)
+      return formatData(decks)
     })
 }

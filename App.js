@@ -10,6 +10,9 @@ import {
   createMaterialTopTabNavigator,
   createStackNavigator,
 } from 'react-navigation'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import reducer from './reducers'
 import { MaterialIcons, Entypo } from '@expo/vector-icons'
 import { white, accentRed, lightGray, gray } from './utils/colors'
 import { Constants } from 'expo'
@@ -109,13 +112,17 @@ const stackRouteConfig = {
 
 const MainNavigator = createStackNavigator(stackRouteConfig)
 
+const store = createStore(reducer)
+
 export default class App extends Component {
   render() {
     return (
-      <View style = {{ flex:1,backgroundColor: lightGray }}>
-        <CustomStatusBar backgroundColor = { accentRed } barStyle="light-content" />
-        <MainNavigator />
-      </View>
+      <Provider store = { store } >
+        <View style = {{ flex:1,backgroundColor: lightGray }}>
+          <CustomStatusBar backgroundColor = { accentRed } barStyle="light-content" />
+          <MainNavigator />
+        </View>
+      </Provider>
     );
   }
 }
