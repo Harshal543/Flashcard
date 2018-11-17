@@ -1,6 +1,20 @@
-import { RECEIVE_DECKS, ADD_DECK } from '../actions'
+import {
+  RECEIVE_DECKS,
+  ADD_DECK,
+  DELETE_DECK,
+  ADD_QUESTION,
+} from '../actions'
 
-function deckEntries (state = {}, action) {
+function question (state = {}, action) {
+  switch (action.type) {
+    case ADD_QUESTION:
+      return state.concat([action.ques])
+    default :
+      return state
+  }
+}
+
+function decks (state = {}, action) {
   switch (action.type) {
     case RECEIVE_DECKS :
       return {
@@ -12,9 +26,24 @@ function deckEntries (state = {}, action) {
         ...state,
         ...action.deck
       }
+    case DELETE_DECK :
+      const filteredDecksId = Object.keys(state).filter((deck) => deck !== action.id)
+      const newDecks = {}
+      filteredDecksId.map((deck) => {
+        return newDecks[deck]= state[deck]
+      })
+      return newDecks
+    case ADD_QUESTION :
+      return {
+        ...state,
+        [id]: {
+          ...state[id]
+          questions: question(state[id].questions,action)
+        }
+      }
     default :
       return state
   }
 }
 
-export default deckEntries
+export default decks

@@ -17,9 +17,10 @@ export function addDeck (deck) {
   }
 }
 
-export function addQuestion (ques) {
+export function addQuestion (id,ques) {
   return {
     type: ADD_QUESTION,
+    id,
     ques,
   }
 }

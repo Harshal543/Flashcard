@@ -19,7 +19,7 @@ const Deck = glamorous.touchableOpacity({
     height: 3
   },
   backgroundColor: white,
-  marginTop: 2,
+  marginTop: 6,
   marginBottom: 2,
   marginLeft: 10,
   marginRight: 10,
@@ -72,7 +72,12 @@ class DeckList extends React.Component {
         {
           deckArray.map((deck) => (
             <Deck key = { decks[deck].title }
-              onPress={() => this.props.navigation.navigate('DeckView')}>
+              onPress={() => this.props.navigation.navigate(
+                'DeckView',
+                {
+                  deckId: deck,
+                  deckTitle: decks[deck].title,
+                })} >
               <Title>{ decks[deck].title }</Title>
               <CardCount>{ decks[deck].questions.length } cards</CardCount>
               <Hint>Tap to open</Hint>
@@ -85,9 +90,10 @@ class DeckList extends React.Component {
 }
 
 function mapStateToProps (decks) {
-  const deckArray = decks ? Object.keys(decks) : null
+  const deckArray = Object.keys(decks).length !== 0 ? Object.keys(decks) : null
   return {
-    decks,
+    decks: Object.keys(decks).length !== 0
+      ? decks : null,
     deckArray,
   }
 }
@@ -99,7 +105,6 @@ function mapDispatchToProps (dispatch) {
     }
   }
 }
-
 
 export default connect(
   mapStateToProps,

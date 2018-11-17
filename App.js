@@ -24,7 +24,7 @@ import NewQuestion from './components/NewQuestion'
 
 function CustomStatusBar ({backgroundColor, ...props}) {
   return (
-    <View style={{ backgroundColor, height: Constants.statusBarHeight, marginBottom: 4 }}>
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
       <StatusBar translucent backgroundColor={backgroundColor} {...props} />
     </View>
   )
@@ -91,7 +91,6 @@ const stackRouteConfig = {
   DeckView: {
     screen: DeckView,
     navigationOptions: {
-      title: 'Deck Title',
       headerTintColor: accentRed,
       headerStyle: {
         backgroundColor: white,

@@ -4,6 +4,10 @@ import { Text, View } from 'react-native'
 import { teal, gray, accentRed } from '../utils/colors'
 import CustomButton from './CustomButton'
 import { Entypo } from '@expo/vector-icons'
+import { connect } from 'react-redux'
+import { deleteDeck } from '../actions'
+import { deleteDeckData } from '../utils/helpers'
+import { red } from '../utils/colors'
 
 const Container = glamorous.view({
   flex: 1,
@@ -38,12 +42,29 @@ const CardCount = glamorous.text({
   color: teal,
 })
 
+const handleDeleteDeck = (id, deleteStoredDeck, navigation) => {
+  deleteDeckData(id)
+  navigation.navigate('DeckList')
+  deleteStoredDeck(id)
+}
+
 function DeckView (props){
+
+  if(props.deck === undefined){
+    return (
+      <Text style = {{color: red}} >Deleted Deck</Text>
+    )
+  }
+
+
+  const { title, questions } = props.deck
+  const { deleteStoredDeck, deckId, navigation } = props
+
   return(
     <Container>
       <ContentContainer>
-        <Title>Deck Title</Title>
-        <CardCount># cards</CardCount>
+        <Title>{title}</Title>
+        <CardCount>{questions.length} cards</CardCount>
       </ContentContainer>
       <Action>
         <CustomButton style = {{ margin: 10 }}
@@ -51,15 +72,47 @@ function DeckView (props){
           value = 'Start Quiz'
           fill />
         <CustomButton onPress={() => props.navigation.navigate('NewQuestion')}
-          style={{ margin: 10 }} value = 'Question' >
+          style={{ margin: 10 }} value = 'Add Question' >
             <Entypo name = 'plus' size = { 18 } />
         </CustomButton>
         <CustomButton style={{ margin: 20 }}
           value = 'Delete Deck'
+          onPress = { () => handleDeleteDeck(
+            deckId,
+            deleteStoredDeck,
+            navigation,
+            ) }
           noborder color = { gray } />
       </Action>
     </Container>
   )
 }
 
-export default DeckView
+DeckView.navigationOptions = ({ navigation }) => {
+  const { deckTitle } = navigation.state.params
+  return {
+    title: deckTitle,
+  }
+}
+
+
+function mapStateToProps (decks,{ navigation }) {
+  const { deckId } = navigation.state.params
+  return {
+    deckId,
+    deck: decks[deckId],
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    deleteStoredDeck: (id) => {
+      dispatch(deleteDeck(id))
+    },
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DeckView)
