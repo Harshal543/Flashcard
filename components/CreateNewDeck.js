@@ -9,6 +9,9 @@ import glamorous from 'glamorous-native'
 import { white, teal, red } from '../utils/colors'
 import Input from './CustomTextInput'
 import CustomButton from './CustomButton'
+import { addDeckData } from '../utils/helpers'
+import { addDeck } from '../actions'
+import { connect } from 'react-redux'
 
 const Form = glamorous.view({
   flex: 1,
@@ -60,6 +63,13 @@ class CreateNewDeck extends Component {
     }))
   }
 
+  handleSubmit = () => {
+    const deckTitle = this.state.title.trim()
+    const { addNewDeck, navigation } = this.props
+    addNewDeck(addDeckData(deckTitle))
+    this.clearInput()
+  }
+
   render() {
     return (
       <KeyboardAvoidingView behavior = 'padding' style = {{flex:1}} >
@@ -76,7 +86,9 @@ class CreateNewDeck extends Component {
               color = { red }
               value = 'Clear'
               onPress = { () => this.clearInput() } />
-            <CustomButton style={{ flex: 2 }} value = 'Submit' />
+            <CustomButton style={{ flex: 2 }}
+              onPress = { () => this.handleSubmit() }
+              value = 'Submit' />
           </Action>
         </Form>
       </KeyboardAvoidingView>
@@ -84,5 +96,15 @@ class CreateNewDeck extends Component {
   }
 }
 
+function mapDispatchToProps (dispatch) {
+  return {
+    addNewDeck: (deck) => {
+      dispatch(addDeck(deck))
+    }
+  }
+}
 
-export default CreateNewDeck
+export default connect(
+  null,
+  mapDispatchToProps
+)(CreateNewDeck)
