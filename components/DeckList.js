@@ -52,6 +52,7 @@ class DeckList extends React.Component {
 
   componentDidMount() {
     const { receiveData } = this.props
+
     fetchData()
       .then((deckEntries) => receiveData(deckEntries))
   }
@@ -62,7 +63,7 @@ class DeckList extends React.Component {
     if (deckArray === null) {
       return (
         <CenterView>
-          <Text>No deck</Text>
+          <Text>Add deck to view</Text>
         </CenterView>
       )
     }

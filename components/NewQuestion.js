@@ -4,6 +4,9 @@ import { View, Text, KeyboardAvoidingView, ScrollView } from 'react-native'
 import { gray, teal, white, accentRed } from '../utils/colors'
 import Input from './CustomTextInput'
 import CustomButton from './CustomButton'
+import { connect } from 'react-redux'
+import { addQuestionData } from '../utils/helpers'
+import { addQuestion } from '../actions'
 
 const Form = glamorous.view({
   flex: 1,
@@ -42,9 +45,17 @@ const Label = glamorous.text({
 
 
 class NewQuestion extends Component {
+  static navigationOptions = ({ navigation }) => {
+    const { deckTitle } = navigation.state.params
+    return {
+      title: deckTitle,
+    }
+  }
+
   state = {
     question: '',
     answer: '',
+    error: false,
   }
 
   handleQuestionInput = (ques) => {
@@ -65,6 +76,33 @@ class NewQuestion extends Component {
     : this.setState(() => ({
         answer: '',
       }))
+  }
+
+  handleAddQuestion = () => {
+    let { question, answer } = this.state
+    const { deckId } = this.props.navigation.state.params
+    const { addNewQuestion } = this.props
+
+    question = question.trim()
+    answer = answer.trim()
+
+    if (question === '' || answer === ''){
+      this.setState(() => ({
+        error: true,
+      }))
+      return 1
+    }
+
+    const formattedQuestion = {
+      question: question,
+      answer: answer,
+    }
+
+    addQuestionData(deckId,question,answer)
+
+    this.props.navigation.navigate('DeckView')
+
+    addNewQuestion(deckId,formattedQuestion)
   }
 
   render(){
@@ -88,7 +126,8 @@ class NewQuestion extends Component {
               onChangeText = { (text) => this.handleAnswerInput(text) } />
           </InteractContainer>
           <Action>
-            <CustomButton value = 'Add' />
+            <CustomButton value = 'Add'
+              onPress = { () => this.handleAddQuestion() } />
           </Action>
         </Form>
       </KeyboardAvoidingView>
@@ -96,4 +135,15 @@ class NewQuestion extends Component {
   }
 }
 
-export default NewQuestion
+function mapDispatchToProps (dispatch) {
+  return {
+    addNewQuestion: (id,ques) => {
+      dispatch(addQuestion(id,ques))
+    }
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(NewQuestion)

@@ -42,9 +42,17 @@ const CardCount = glamorous.text({
   color: teal,
 })
 
+const CenterView = glamorous.view({
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+})
+
 const handleDeleteDeck = (id, deleteStoredDeck, navigation) => {
   deleteDeckData(id)
+
   navigation.navigate('DeckList')
+
   deleteStoredDeck(id)
 }
 
@@ -52,7 +60,9 @@ function DeckView (props){
 
   if(props.deck === undefined){
     return (
-      <Text style = {{color: red}} >Deleted Deck</Text>
+      <CenterView>
+        <Text style = {{color: red}} >Deleted Deck</Text>
+      </CenterView>
     )
   }
 
@@ -70,8 +80,21 @@ function DeckView (props){
         <CustomButton style = {{ margin: 10 }}
           color = { accentRed }
           value = 'Start Quiz'
+          onPress = { () => props.navigation.navigate(
+              'QuizView',
+              {
+                deckId: deckId,
+              }
+            )}
           fill />
-        <CustomButton onPress={() => props.navigation.navigate('NewQuestion')}
+        <CustomButton
+          onPress= { () => props.navigation.navigate(
+              'NewQuestion',
+              {
+                deckId: deckId,
+                deckTitle: title,
+              }
+            )}
           style={{ margin: 10 }} value = 'Add Question' >
             <Entypo name = 'plus' size = { 18 } />
         </CustomButton>
@@ -98,6 +121,7 @@ DeckView.navigationOptions = ({ navigation }) => {
 
 function mapStateToProps (decks,{ navigation }) {
   const { deckId } = navigation.state.params
+
   return {
     deckId,
     deck: decks[deckId],

@@ -78,17 +78,20 @@ class CreateNewDeck extends Component {
             <Title>Enter Title of Deck</Title>
             <Input value = { this.state.title }
               placeholder = 'Title'
-              onChangeText = {(text) => this.handleChange(text)} />
+              onChangeText = {(text) => this.handleChange(text)}
+            />
           </InteractContainer>
           <Action>
             <CustomButton
               style = {{ flex: 1 }}
               color = { red }
               value = 'Clear'
-              onPress = { () => this.clearInput() } />
+              onPress = { () => this.clearInput() }
+            />
             <CustomButton style={{ flex: 2 }}
               onPress = { () => this.handleSubmit() }
-              value = 'Submit' />
+              value = 'Submit'
+            />
           </Action>
         </Form>
       </KeyboardAvoidingView>

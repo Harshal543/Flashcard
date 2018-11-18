@@ -34,10 +34,11 @@ function decks (state = {}, action) {
       })
       return newDecks
     case ADD_QUESTION :
+      const { id } = action
       return {
         ...state,
         [id]: {
-          ...state[id]
+          ...state[id],
           questions: question(state[id].questions,action)
         }
       }

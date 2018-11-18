@@ -36,7 +36,7 @@ export function deleteDeckData (id) {
     })
 }
 
-export function addQuestion (id,ques,ans) {
+export function addQuestionData (id,ques,ans) {
   const arrToAdd = [{
     question: ques,
     answer: ans,
@@ -46,7 +46,7 @@ export function addQuestion (id,ques,ans) {
     const deckData = JSON.parse(decks)
     deckData[id] = {
       ...deckData[id],
-      questions: deckData[id].questions.concat(eleToAdd)
+      questions: deckData[id].questions.concat(arrToAdd)
     }
     AsyncStorage.setItem(DECK_STORAGE_KEY,JSON.stringify(deckData))
   })

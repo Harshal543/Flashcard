@@ -4,7 +4,6 @@ import {
   View,
   Platform,
   StatusBar,
-  AsyncStorage,
 } from 'react-native';
 import {
   createMaterialTopTabNavigator,
@@ -20,6 +19,7 @@ import DeckList from './components/DeckList'
 import CreateNewDeck from './components/CreateNewDeck'
 import DeckView from './components/DeckView'
 import NewQuestion from './components/NewQuestion'
+import QuizView  from './components/QuizView'
 
 
 function CustomStatusBar ({backgroundColor, ...props}) {
@@ -100,13 +100,18 @@ const stackRouteConfig = {
   NewQuestion: {
     screen: NewQuestion,
     navigationOptions: {
-      title: 'New Question',
       headerTintColor: accentRed,
       headerStyle: {
         backgroundColor: white,
       },
     },
   },
+  QuizView: {
+    screen: QuizView,
+    navigationOptions: {
+      header: null,
+    }
+  }
 }
 
 const MainNavigator = createStackNavigator(stackRouteConfig)
@@ -117,7 +122,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store = { store } >
-        <View style = {{ flex:1,backgroundColor: lightGray }}>
+        <View style = {{ flex:1, backgroundColor: lightGray }}>
           <CustomStatusBar backgroundColor = { accentRed } barStyle="light-content" />
           <MainNavigator />
         </View>
