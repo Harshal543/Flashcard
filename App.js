@@ -18,12 +18,13 @@ import { Constants } from 'expo'
 import DeckList from './components/DeckList'
 import CreateNewDeck from './components/CreateNewDeck'
 import DeckView from './components/DeckView'
-import NewQuestion from './components/NewQuestion'
+import AddCard from './components/AddCard'
 import QuizView  from './components/QuizView'
+import { setLocalNotification } from './utils/helpers'
 
 
 function CustomStatusBar ({backgroundColor, ...props}) {
-  return (
+  return ( // custom bar
     <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
       <StatusBar translucent backgroundColor={backgroundColor} {...props} />
     </View>
@@ -32,6 +33,7 @@ function CustomStatusBar ({backgroundColor, ...props}) {
 
 
 const tabRouteConfig = {
+  // routes for tab navigator
   DeckList: {
     screen: DeckList,
     navigationOptions: {
@@ -49,6 +51,7 @@ const tabRouteConfig = {
 }
 
 const tabNavigatorConfig = {
+  //tab nav properties
   navigationOptions : {
     header: null,
   },
@@ -82,6 +85,7 @@ const tabNavigatorConfig = {
 const Tabs = createMaterialTopTabNavigator(tabRouteConfig,tabNavigatorConfig)
 
 const stackRouteConfig = {
+  //routes for stack navigator
   Home: {
     screen: Tabs,
     navigationOptions: {
@@ -97,8 +101,8 @@ const stackRouteConfig = {
       },
     },
   },
-  NewQuestion: {
-    screen: NewQuestion,
+  AddCard: {
+    screen: AddCard,
     navigationOptions: {
       headerTintColor: accentRed,
       headerStyle: {
@@ -116,9 +120,15 @@ const stackRouteConfig = {
 
 const MainNavigator = createStackNavigator(stackRouteConfig)
 
-const store = createStore(reducer)
+const store = createStore(reducer) //Initialize store
 
 export default class App extends Component {
+
+  componentDidMount() {
+    //set Notification
+    setLocalNotification()
+  }
+
   render() {
     return (
       <Provider store = { store } >
@@ -127,6 +137,6 @@ export default class App extends Component {
           <MainNavigator />
         </View>
       </Provider>
-    );
+    )
   }
 }

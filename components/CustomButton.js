@@ -15,7 +15,8 @@ const Btn = glamorous.touchableOpacity({
   alignItems: 'center',
 },
   (props) => ({
-    backgroundColor: props.fill && props.color,
+    backgroundColor: props.fill &&
+      (props.color ? props.color : teal) ,
     borderColor: props.color ? props.color : teal,
     borderWidth: props.noborder ? 0 : 1,
   })
@@ -27,17 +28,15 @@ const ButtonLabel = glamorous.text({
   fontWeight: 'bold',
 },
   (props) => ({
-    color: props.color ?
-      (props.fill ? white : props.color)
-      : teal,
+    color: props.fill ? white
+      : (props.color ? props.color : teal),
   })
 )
 
 const ButtonIcon = glamorous.text({},
   (props) => ({
-    color: props.color ?
-      (props.fill ? white : props.color)
-      : teal,
+    color: props.fill ? white
+      : (props.color ? props.color : teal),
   })
 )
 

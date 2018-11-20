@@ -3,6 +3,7 @@ import { AsyncStorage } from 'react-native'
 export const DECK_STORAGE_KEY = 'FlashCard:DeckList'
 
 const dummyData = {
+  //Dummy Data for testing
   React: {
     title: 'React',
     questions: [
@@ -28,13 +29,14 @@ const dummyData = {
 }
 
 function setDummyData () {
+  // store dummy data
   AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(dummyData))
   return dummyData
 }
 
 
 export function formatData (decks) {
-  return decks === null
-    ? setDummyData()
-    : JSON.parse(decks)
+  return decks === null // if app is loaded for 1st time
+    ? setDummyData() // return dummy data
+    : JSON.parse(decks) // return stored data
 }

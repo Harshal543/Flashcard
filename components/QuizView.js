@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import glamorous from 'glamorous-native'
+import Result from './Result'
 import CardView from './CardView'
+import CustomButton from './CustomButton'
 import { connect } from 'react-redux'
+import { accentRed } from '../utils/colors'
+import { clearLocalNotification } from '../utils/helpers'
 
 const CenterView = glamorous.view({
   flex: 1,
@@ -15,6 +19,18 @@ class QuizView extends Component {
   state = {
     correct: 0,
     currentCard: 0,
+  }
+
+  componentDidMount() {
+    // clear Notification when quiz starts
+    clearLocalNotification()
+  }
+
+  resetState = () => {
+    this.setState(() => ({
+      correct: 0,
+      currentCard: 0,
+    }))
   }
 
   nextCard = () => {
@@ -31,9 +47,22 @@ class QuizView extends Component {
 
   render(){
     const { currentCard, correct } = this.state
-    const { totalCards, deckId } = this.props
+    const { totalCards, deckId, navigation } = this.props
 
-    if (currentCard < totalCards) {
+    if (totalCards === 0) { // no cards in deck
+      return(
+        <CenterView>
+          <Text>You cannot start quiz with no cards.</Text>
+          <Text>Add cards to start quiz.</Text>
+          <CustomButton value = 'Back'
+            color = { accentRed }
+            onPress = { () => navigation.goBack() }
+            noborder />
+        </CenterView>
+      )
+    }
+
+    if (currentCard < totalCards) { // actual card view
       return(
         <View style = {{flex:1}} >
           <CardView
@@ -46,9 +75,16 @@ class QuizView extends Component {
       )
     }
 
-    if(currentCard === totalCards) {
+    if (currentCard === totalCards) { // display result
       return(
-        <Text>Correct: { correct }</Text>
+        <Result
+          correct = { correct }
+          totalCards = { totalCards }
+          deckId = { deckId }
+          navigation = { navigation }
+          resetState = { this.resetState }
+        />
+
       )
     }
 

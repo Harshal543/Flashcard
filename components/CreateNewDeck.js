@@ -55,6 +55,7 @@ class CreateNewDeck extends Component {
         title: value,
       }))
     : this.clearInput()
+    // not allowing starting spaces to be entered
   }
 
   clearInput = () => {
@@ -66,8 +67,14 @@ class CreateNewDeck extends Component {
   handleSubmit = () => {
     const deckTitle = this.state.title.trim()
     const { addNewDeck, navigation } = this.props
+
+    //adding deck in async storage and providing it to redux
     addNewDeck(addDeckData(deckTitle))
+
     this.clearInput()
+
+    //navigate to deck list view
+    navigation.goBack()
   }
 
   render() {

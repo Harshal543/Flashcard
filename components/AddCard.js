@@ -46,6 +46,7 @@ const Label = glamorous.text({
 
 class NewQuestion extends Component {
   static navigationOptions = ({ navigation }) => {
+    // setting title in navigator
     const { deckTitle } = navigation.state.params
     return {
       title: deckTitle,
@@ -87,9 +88,11 @@ class NewQuestion extends Component {
     answer = answer.trim()
 
     if (question === '' || answer === ''){
+      // checking for empty inputs
       this.setState(() => ({
         error: true,
       }))
+
       return 1
     }
 
@@ -98,38 +101,46 @@ class NewQuestion extends Component {
       answer: answer,
     }
 
+    // add in async storage
     addQuestionData(deckId,question,answer)
 
+    // back to Deck
     this.props.navigation.navigate('DeckView')
 
+    //add in redux
     addNewQuestion(deckId,formattedQuestion)
   }
 
   render(){
-    const { question, answer } = this.state
+    const { question, answer, error } = this.state
     return(
-      <KeyboardAvoidingView behavior = 'padding' style = {{ flex:1 }} >
-        <Form>
-          <InteractContainer>
-            <Title>Add New Question</Title>
-            <Label>Question:</Label>
-            <Input value = { question }
-              placeholder = 'Question'
-              style = {{ margin:10 }}
-              multiline = { true }
-              onChangeText = { (text) => this.handleQuestionInput(text) } />
-            <Label>Answer:</Label>
-            <Input value = { answer }
-              placeholder = 'Answer...'
-              style = {{ margin: 10, marginTop: 0, height: 80 }}
-              multiline = { true }
-              onChangeText = { (text) => this.handleAnswerInput(text) } />
-          </InteractContainer>
-          <Action>
-            <CustomButton value = 'Add'
-              onPress = { () => this.handleAddQuestion() } />
-          </Action>
-        </Form>
+      // scroll view is added for assisting in closing keyboard
+      <KeyboardAvoidingView behavior = 'padding' style = {{ flex:1, paddingBottom: 50 }} >
+        <ScrollView contentContainerStyle = {{ flex:1 }}>
+          <Form>
+            <InteractContainer>
+              <Title>Add New Card</Title>
+              {error &&
+                <Text style = {{backgroundColor: accentRed, color: white, padding: 5}}>Both inputs are required to be filled.</Text>}
+              <Label>Question:</Label>
+              <Input value = { question }
+                placeholder = 'Question'
+                style = {{ margin:10 }}
+                multiline = { true }
+                onChangeText = { (text) => this.handleQuestionInput(text) } />
+              <Label>Answer:</Label>
+              <Input value = { answer }
+                placeholder = 'Answer...'
+                style = {{ margin: 10, marginTop: 0, height: 80 }}
+                multiline = { true }
+                onChangeText = { (text) => this.handleAnswerInput(text) } />
+            </InteractContainer>
+            <Action>
+              <CustomButton value = 'Add'
+                onPress = { () => this.handleAddQuestion() } />
+            </Action>
+          </Form>
+        </ScrollView>
       </KeyboardAvoidingView>
     )
   }

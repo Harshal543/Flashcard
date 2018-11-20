@@ -49,16 +49,20 @@ const CenterView = glamorous.view({
 })
 
 const handleDeleteDeck = (id, deleteStoredDeck, navigation) => {
+  // delete from aysnc storage
   deleteDeckData(id)
 
+  //back to list
   navigation.navigate('DeckList')
 
+  //delete from redux
   deleteStoredDeck(id)
 }
 
 function DeckView (props){
 
   if(props.deck === undefined){
+    //just for precaution
     return (
       <CenterView>
         <Text style = {{color: red}} >Deleted Deck</Text>
@@ -85,17 +89,18 @@ function DeckView (props){
               {
                 deckId: deckId,
               }
+
             )}
           fill />
         <CustomButton
           onPress= { () => props.navigation.navigate(
-              'NewQuestion',
+              'AddCard',
               {
                 deckId: deckId,
                 deckTitle: title,
               }
             )}
-          style={{ margin: 10 }} value = 'Add Question' >
+          style={{ margin: 10 }} value = 'Add Card' >
             <Entypo name = 'plus' size = { 18 } />
         </CustomButton>
         <CustomButton style={{ margin: 20 }}
@@ -104,7 +109,7 @@ function DeckView (props){
             deckId,
             deleteStoredDeck,
             navigation,
-            ) }
+            )}
           noborder color = { gray } />
       </Action>
     </Container>
@@ -112,7 +117,9 @@ function DeckView (props){
 }
 
 DeckView.navigationOptions = ({ navigation }) => {
+  //setting title
   const { deckTitle } = navigation.state.params
+
   return {
     title: deckTitle,
   }
@@ -138,5 +145,5 @@ function mapDispatchToProps (dispatch) {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(DeckView)

@@ -53,6 +53,7 @@ class DeckList extends React.Component {
   componentDidMount() {
     const { receiveData } = this.props
 
+    //fetching data
     fetchData()
       .then((deckEntries) => receiveData(deckEntries))
   }
@@ -61,6 +62,7 @@ class DeckList extends React.Component {
     const { decks, deckArray } = this.props
 
     if (deckArray === null) {
+      // no deck in view
       return (
         <CenterView>
           <Text>Add deck to view</Text>
@@ -68,7 +70,8 @@ class DeckList extends React.Component {
       )
     }
 
-    return ( // Try different View options FlatView or ListView
+    return (
+      // Listing all decks
       <ScrollView>
         {
           deckArray.map((deck) => (
@@ -92,6 +95,7 @@ class DeckList extends React.Component {
 
 function mapStateToProps (decks) {
   const deckArray = Object.keys(decks).length !== 0 ? Object.keys(decks) : null
+
   return {
     decks: Object.keys(decks).length !== 0
       ? decks : null,
