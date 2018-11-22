@@ -105,7 +105,7 @@ export function setLocalNotification () {
               AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
             }
             else {// permission rejected or undetermined
-              alert('You will not receive any notifications. Permission can be provided to app in settings.')
+              alert('You will not receive any notifications. Permission can be granted to app in settings.')
             }
           })
       }

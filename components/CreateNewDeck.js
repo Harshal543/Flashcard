@@ -66,6 +66,7 @@ class CreateNewDeck extends Component {
 
   handleSubmit = () => {
     const deckTitle = this.state.title.trim()
+    const deckId =  deckTitle.replace(/\s/g,'_')
     const { addNewDeck, navigation } = this.props
 
     //adding deck in async storage and providing it to redux
@@ -73,8 +74,13 @@ class CreateNewDeck extends Component {
 
     this.clearInput()
 
-    //navigate to deck list view
-    navigation.goBack()
+    //navigate to deck
+    navigation.navigate(
+      'DeckView',
+      {
+        deckId: deckId,
+        deckTitle: deckTitle,
+      })
   }
 
   render() {
